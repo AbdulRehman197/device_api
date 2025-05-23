@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Device Socket Example</title>
+</head>
+<body>
+  <h2>Device Socket Test</h2>
+  <button id="send">Send Message</button>
+  <pre id="log"></pre>
+
+  <script src="https://cdn.jsdelivr.net/npm/phoenix@1.7.21/priv/static/phoenix.min.js"></script>
+  <script>
+    const deviceId = "device-abc-123" // Replace with actual deviceId
+    const socket = new Phoenix.Socket("ws://localhost:4000/user_socket", {
+      params: { token: "SFMyNTY.NTM3ZWYzNWEtOGZhNC00ZGNjLWE5ODktMzM0YmFkZjI4ZGRj._OeOJKTq2Hhp9nDiiUVuEuO5dL7N2GsReS4dTMfxyUo", device_id:deviceId }
+    })
+
+    socket.connect()
+
+    const channel = socket.channel("device:" + deviceId, {})
+
+
+    const log = (msg) => {
+      const out = document.getElementById("log")
+      out.textContent += msg + "\n"
+    }
+
+    channel.join()
+      .receive("ok", resp => {
+        console.log((resp))
+        log("✅ Joined device channel")
+      })
+      .receive("error", resp => {
+        log("❌ Failed to join channel")
+      })
+      channel.on("message", payload => {
+        console.log(payload)
+      })
+      
+    channel.on("broadcast", payload => {
+      log("📩 Received: " + JSON.stringify(payload))
+    })
+
+    document.getElementById("send").addEventListener("click", () => {
+      const message = { content: "Hello from browser" }
+      channel.push("send_message", message)
+      log("📤 Sent: " + JSON.stringify(message))
+    })
+  </script>
+</body>
+</html>
