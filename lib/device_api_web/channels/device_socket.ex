@@ -1,4 +1,4 @@
-defmodule EchoSocket do
+defmodule DeviceApiWeb.DeviceSocket do
   @behaviour Phoenix.Socket.Transport
   alias DeviceApiWeb.SocketRegistry
   alias DeviceApi.Users.Users

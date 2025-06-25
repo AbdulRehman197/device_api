@@ -11,7 +11,7 @@ defmodule DeviceApiWeb.Endpoint do
     same_site: "Lax"
   ]
 
-  socket "/socket", EchoSocket,
+  socket "/socket", DeviceApiWeb.DeviceSocket,
     websocket: [
       connect_info: [pow_config: @pow_config],
       timeout: :infinity
