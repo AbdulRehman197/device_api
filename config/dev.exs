@@ -15,6 +15,8 @@ config :device_api, DeviceApi.DeviceRepo,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true
 
+
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

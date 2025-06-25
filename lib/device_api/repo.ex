@@ -9,3 +9,5 @@ defmodule DeviceApi.DeviceRepo do
     otp_app: :device_api,
     adapter: Ecto.Adapters.SQLite3
 end
+
+

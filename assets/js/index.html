@@ -11,14 +11,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/phoenix@1.7.21/priv/static/phoenix.min.js"></script>
   <script>
-    const deviceId = "device-abc-123" // Replace with actual deviceId
+    const deviceId = "8Ccz6WIOyu9GqIdv8WLAYuCrNRysSHr63xEpnYjyzlQ=" // Replace with actual deviceId
     const socket = new Phoenix.Socket("ws://localhost:4000/user_socket", {
-      params: { token: "SFMyNTY.NTM3ZWYzNWEtOGZhNC00ZGNjLWE5ODktMzM0YmFkZjI4ZGRj._OeOJKTq2Hhp9nDiiUVuEuO5dL7N2GsReS4dTMfxyUo", device_id:deviceId }
+      params: { token: "SFMyNTY.MGQ2NWFjODctMjljNS00NDk5LTk4Y2EtMmMwYjkyZDAyMWU2.Z9X7byQqyCDXXu4UaqzeCSEdRG2jlOlGi6dUNwTmeFU", device_id: deviceId }
     })
 
     socket.connect()
 
-    const channel = socket.channel("device:" + deviceId, {})
+    const channel = socket.channel("user:" + 1, {})
 
 
     const log = (msg) => {

@@ -36,16 +36,21 @@ defmodule DeviceApi.Users.Users do
   def delete_user(%User{} = user), do: Repo.delete(user)
 
   # List all users
+  @spec list_users() :: any()
   def list_users(), do: Repo.all(User)
 
   # Add device ID to user's device list
   def append_device_to_user(%User{} = user, device_id) when is_binary(device_id) do
-    current_devices = user.devices || []
-    updated_devices = Enum.uniq([device_id | current_devices])
+    if(Enum.member?(user.devices, device_id)) do
+      {:error, "Device ID already exists"}
+    else
+      current_devices = user.devices || []
+      updated_devices = Enum.uniq([device_id | current_devices])
 
-    user
-    |> Ecto.Changeset.change(%{devices: updated_devices})
-    |> Repo.update()
+      user
+      |> Ecto.Changeset.change(%{devices: updated_devices})
+      |> Repo.update()
+    end
   end
 
   # Remove device ID from user's device list

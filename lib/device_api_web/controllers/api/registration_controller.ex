@@ -9,6 +9,7 @@ defmodule DeviceApiWeb.API.RegistrationController do
     # dbg(user_params)
     [{:app_password, app_password} | _] = Application.get_env(:device_api, :app_password)
     dbg(app_password)
+    dbg(user_params["app_password"])
 
     dbg(
       user_params["app_password"] ==
@@ -28,6 +29,7 @@ defmodule DeviceApiWeb.API.RegistrationController do
             )
 
             json(conn, %{
+              user: user,
               data: %{
                 access_token: conn.private.api_access_token,
                 renewal_token: conn.private.api_renewal_token

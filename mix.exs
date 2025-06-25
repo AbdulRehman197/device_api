@@ -19,7 +19,7 @@ defmodule DeviceApi.MixProject do
   def application do
     [
       mod: {DeviceApi.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :wx, :observer]
     ]
   end
 
@@ -47,7 +47,7 @@ defmodule DeviceApi.MixProject do
       {:bandit, "~> 1.5"},
       {:pow, "~> 1.0.27"},
       {:joken, "~> 2.0"},
-
+      {:cors_plug, "~> 3.0"}
     ]
   end
 

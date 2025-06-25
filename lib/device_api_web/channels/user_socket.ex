@@ -1,6 +1,8 @@
 defmodule DeviceApiWeb.UserSocket do
   use Phoenix.Socket
 
+  require Logger
+
   # A Socket handler
   #
   # It's possible to control the websocket connection and
@@ -11,7 +13,7 @@ defmodule DeviceApiWeb.UserSocket do
   # pointing to the `DeviceApiWeb.RoomChannel`:
   #
   # channel "room:*", DeviceApiWeb.RoomChannel
-  channel "device:*", DeviceApiWeb.DeviceChannel
+  # channel "user:*", DeviceApiWeb.DeviceChannel
   #
   # To create a channel file, use the mix task:
   #
@@ -46,6 +48,7 @@ defmodule DeviceApiWeb.UserSocket do
         pow_config: config
       }) do
     # dbg(token)
+    dbg(DeviceApiWeb.Endpoint.config(:secret_key_base))
 
     %Plug.Conn{secret_key_base: socket.endpoint.config(:secret_key_base)}
     |> DeviceApiWeb.APIAuthPlug.get_credentials(
@@ -69,13 +72,13 @@ defmodule DeviceApiWeb.UserSocket do
     end
   end
 
-  # @impl true
-  # @spec id(%{
-  #         :assigns => %{:session_fingerprint => any(), optional(any()) => any()},
-  #         optional(any()) => any()
-  #       }) :: <<_::64, _::_*8>>
-  # def id(%{assigns: %{session_fingerprint: session_fingerprint}}),
-  #   do: "user_socket:#{session_fingerprint}"
+  @impl true
+  @spec id(%{
+          :assigns => %{:session_fingerprint => any(), optional(any()) => any()},
+          optional(any()) => any()
+        }) :: <<_::64, _::_*8>>
+  def id(%{assigns: %{session_fingerprint: session_fingerprint}}),
+    do: "user_socket:#{session_fingerprint}"
 
   # @impl true
   # def connect(params, socket, _connect_info) do
@@ -88,8 +91,10 @@ defmodule DeviceApiWeb.UserSocket do
   # @impl true
   # def id(socket), do: "user_socket:#{socket.assigns.device_id}"
 
- @impl true
-  def id(%{assigns: %{session_fingerprint: session_fingerprint}}), do: "user_socket:#{session_fingerprint}"
+  # @impl true
+  # def id(%{assigns: %{session_fingerprint: session_fingerprint}}),
+  #   do: "user_socket:#{session_fingerprint}"
+
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
   #
@@ -98,4 +103,9 @@ defmodule DeviceApiWeb.UserSocket do
   # Returning `nil` makes this socket anonymous.
   # @impl true
   # def id(_socket), do: nil
+
+  # def handle_info({:text, message}, state) do
+  #   dbg(Jason.decode!(message))
+  #   {:push, Jason.encode!(%{status: "ok"}), state}
+  # end
 end

@@ -41,8 +41,7 @@ config :phoenix, :json_library, Jason
 
 config :device_api, :pow,
   user: DeviceApi.Users.User,
-  repo: DeviceApi.UserRepo,
-  user_id_field: :username
+  repo: DeviceApi.UserRepo
 
 config :device_api, :app_password,
   app_password: "9#7Jk@!!296Emgs2ho0l4e454@"

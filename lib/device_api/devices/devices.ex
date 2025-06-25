@@ -32,15 +32,17 @@ defmodule DeviceApi.Devices do
         {:error, "Device not found"}
 
       _ ->
-        current_users = device.users || []
-        users = current_users ++ [user_id]
+        if Enum.member?(device.users, user_id) do
+          {:error, "User already exists"}
+        else
+          current_users = device.users || []
+          users = current_users ++ [user_id]
 
-        device
-        |> Device.changeset(%{users: users})
-        |> Repo.update()
+          device
+          |> Ecto.Changeset.change(%{users: users})
+          |> Repo.update()
+        end
     end
-
-    dbg(device)
   end
 
   # Upsert: insert if missing, or update if exists

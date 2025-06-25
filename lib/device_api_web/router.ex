@@ -18,11 +18,12 @@ defmodule DeviceApiWeb.Router do
     resources "/registration", RegistrationController, singleton: true, only: [:create]
     resources "/session", SessionController, singleton: true, only: [:create, :delete]
     post "/session/renew", SessionController, :renew
+    resources "/devices", DeviceController, only: [:index, :create]
   end
 
   scope "/api", DeviceApiWeb.API do
     pipe_through [:api, :api_protected]
-    resources "/devices", DeviceController, only: [:index, :create]
+
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

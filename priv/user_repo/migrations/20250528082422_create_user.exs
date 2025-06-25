@@ -1,9 +1,9 @@
-defmodule DeviceApi.Repo.Migrations.CreateUsers do
+defmodule DeviceApi.UserRepo.Migrations.CreateUser do
   use Ecto.Migration
-
-  def change do
-    create table(:users) do
-      add :email, :string, null: false
+def change do
+  create table(:users) do
+      add :email, :string
+      add :username, :string
       add :password_hash, :string
       add :firstname, :string
       add :lastname, :string
@@ -14,6 +14,6 @@ defmodule DeviceApi.Repo.Migrations.CreateUsers do
       timestamps()
     end
 
-    create unique_index(:users, [:email])
-  end
+    create unique_index(:users, [:username])
+end
 end

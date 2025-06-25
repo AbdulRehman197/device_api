@@ -11,11 +11,18 @@ defmodule DeviceApiWeb.Endpoint do
     same_site: "Lax"
   ]
 
+  socket "/socket", EchoSocket,
+    websocket: [
+      connect_info: [pow_config: @pow_config],
+      timeout: :infinity
+    ],
+    longpoll: false
+
   socket "/user_socket", DeviceApiWeb.UserSocket,
-      websocket: [
-        connect_info: [pow_config: @pow_config]
-      ],
-      longpoll: false
+    websocket: [
+      connect_info: [pow_config: @pow_config]
+    ],
+    longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket,
     websocket: [connect_info: [session: @session_options]],
@@ -54,5 +61,6 @@ defmodule DeviceApiWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug Pow.Plug.Session, @pow_config
+  plug CORSPlug
   plug DeviceApiWeb.Router
 end

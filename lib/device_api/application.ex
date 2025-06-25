@@ -12,6 +12,7 @@ defmodule DeviceApi.Application do
       DeviceApi.UserRepo,
       DeviceApi.DeviceRepo,
       DeviceApi.DeviceRegistry,
+      DeviceDBManager,
       {Ecto.Migrator,
         repos: Application.fetch_env!(:device_api, :ecto_repos),
         skip: skip_migrations?()},
@@ -22,7 +23,8 @@ defmodule DeviceApi.Application do
       # Start a worker by calling: DeviceApi.Worker.start_link(arg)
       # {DeviceApi.Worker, arg},
       # Start to serve requests, typically the last entry
-      DeviceApiWeb.Endpoint
+      DeviceApiWeb.Endpoint,
+      DeviceApi.UserTracker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
